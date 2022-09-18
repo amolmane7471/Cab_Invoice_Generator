@@ -8,7 +8,7 @@ public class CabInvoiceGenerator {
         return distance * MINIMUM_COST_PER_KILOMETER + time * COST_PER_TIME;
     }
     public static void main(String[] args) {
-        System.out.println("****Welcome to CabInvoiceGenerator Application****");
+        System.out.println("**** Welcome to CabInvoiceGenerator Application ****");
         System.out.println(calculateFare(2.0, 5));
     }
 }
