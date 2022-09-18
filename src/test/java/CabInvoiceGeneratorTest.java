@@ -1,31 +1,33 @@
 import com.bridgelabz.CabInvoice.CabInvoiceGenerator;
+import com.bridgelabz.CabInvoice.InvoiceDetails;
 import com.bridgelabz.CabInvoice.Ride;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class CabInvoiceGeneratorTest {
-    /**
-     * UC1 : test for calculate fare
-     */
+    CabInvoiceGenerator invoiceGenerator = new CabInvoiceGenerator();
     @Test
-    public void givenDistanceAndTime_ShouldReturnTotalFare() {
-        CabInvoiceGenerator cabInvoiceGenerator = new CabInvoiceGenerator();
-        double distance = 2.0;
-        int time = 5;
-        double fare = cabInvoiceGenerator.calculateFare(distance, time);
-        Assertions.assertEquals(25, fare, 0.0);
+    void given_DistanceAndTime_ShouldReturn_TotalFare() {
+        double distance = 5.0;
+        int time = 10;
+        double fare = invoiceGenerator.calculateFare(distance, time);
+        Assertions.assertEquals(60 , fare);
     }
-    /**
-     * UC2 : test for multiple rides
-     */
+
     @Test
-    public void givenMultipleRides_ShouldReturnTotalFare() {
-        CabInvoiceGenerator cabInvoiceGenerator = new CabInvoiceGenerator();
-        Ride[] rides = {
-                new Ride(2.0, 5),
-                new Ride(0.1, 1)
-        };
-        double totalFare = cabInvoiceGenerator.calculateFare(rides);
-        Assertions.assertEquals(27.0, totalFare, 0.0);
+    void givenLessDistanceOrTime_ShouldReturnMinFare() {
+        double distance = 0.1;
+        int time = 1;
+        double fare = invoiceGenerator.calculateFare(distance, time);
+        Assertions.assertEquals(5 , fare);
+    }
+
+    @Test
+    void givenMultipleRides_shouldReturnInvoiceSummary() {
+        Ride[] rides = {new Ride(2.0 , 5),
+                new Ride(0.1 , 1)};
+        InvoiceDetails details = invoiceGenerator.calculateFare(rides);
+        InvoiceDetails ExpectedInvoiceDetails = new InvoiceDetails(2, 30.0);
+        Assertions.assertEquals(ExpectedInvoiceDetails , details);
     }
 }
